@@ -1,4 +1,3 @@
-import { pool } from "../../../config/db";
 import LoginModel from "../../../models/loginModel";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
