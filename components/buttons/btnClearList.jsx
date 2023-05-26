@@ -9,7 +9,7 @@ export default function BtnClearList({ data }) {
 
     return (
     <button
-      className="text-sm text-purple-500 font-semibold hover:opacity-70"
+      className="text-sm text-blue-500 font-semibold hover:opacity-70"
       onClick={addElement}
     >
       Borrar todo

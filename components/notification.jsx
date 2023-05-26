@@ -25,14 +25,14 @@ export default function Notificacion({ children }) {
       <div
         className={`w-10 h-10 rounded-full duration-200 ease-in-out flex items-center relative cursor-pointer justify-center  hover:opacity-70 active:scale-[.85] 
         ${
-          isActive ? "bg-purple-200" : "bg-gray-200"
+          isActive ? "bg-blue-200" : "bg-gray-200"
         }`}
         onClick={() => setActive(!isActive)}
       >
         <BellIcon
           className={`w-5 h-5 ${
             isActive
-              ? "fill-purple-500 text-purple-500"
+              ? "fill-blue-500 text-blue-500"
               : "fill-gray-500 text-gray-500"
           }`}
         />

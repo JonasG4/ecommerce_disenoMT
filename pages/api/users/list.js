@@ -1,4 +1,4 @@
-import userModel from "../../../models/userModel";
+import userModel from "@/models/userModel";
 
 export default async function ListHandler(req, res) {
   const model = new userModel();

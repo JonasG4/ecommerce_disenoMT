@@ -42,9 +42,9 @@ export default function Navbar() {
           <input
             type="search"
             placeholder="Buscar"
-            className="movile:max-w-[120px] sm:max-w-[350px] border-none outline-none pl-11 rounded-md bg-slate-100 ring-1 ring-gray-300 focus:ring-purple-500 font-semibold placeholder:font-semibold shadow-md text-gray-700 text-sm"
+            className="movile:max-w-[120px] sm:max-w-[350px] border-none outline-none pl-11 rounded-md bg-slate-100 ring-1 ring-gray-300 focus:ring-blue-500  shadow-md text-gray-700 text-sm"
           />
-          <SearchGlass className="w-4 absolute fill-gray-400 left-3" />
+          <SearchGlass className="w-4 absolute fill-gray-400 left-3" width={16} />
         </div>
         <div className="ml-auto flex gap-5 items-center">
           <Notificacion>

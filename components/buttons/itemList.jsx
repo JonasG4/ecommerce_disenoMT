@@ -6,12 +6,12 @@ export default function ItemList({ item, key, handleChangeStatus }) {
   return (
     <li
       key={key}
-      className={`w-full h-[75px] relative rounded-md bg-gray-100 py-2 px-3 ring-1 ring-gray-200 items-start flex gap-3 cursor-pointer hover:opacity-80 hover:ring-purple-500`}
+      className={`w-full h-[75px] relative rounded-md bg-gray-100 py-2 px-3 ring-1 ring-gray-200 items-start flex gap-3 cursor-pointer hover:opacity-80 hover:ring-blue-500`}
       onClick={()=>{handleChangeStatus}}
 >
       <BoxCheckIcon
         className={`w-5 
-      ${item.isSeen ? "fill-gray-400" : "fill-purple-500"} 
+      ${item.isSeen ? "fill-gray-400" : "fill-blue-500"} 
       text-green-600 mt-1`}
       />
       <div className="flex flex-col justify-center">
@@ -23,14 +23,14 @@ export default function ItemList({ item, key, handleChangeStatus }) {
           className={`text-[12px]  ${
             item.isSeen
               ? "text-gray-500 font-light"
-              : "font-bold text-purple-500"
+              : "font-bold text-blue-500"
           }`}
         >
           {item.ago}
         </p>
       </div>
       {!item.isSeen && (
-        <div className="absolute w-2 h-2 bg-purple-500 rounded-full right-2 top-1/2 z-10"></div>
+        <div className="absolute w-2 h-2 bg-blue-500 rounded-full right-2 top-1/2 z-10"></div>
       )}
     </li>
   );

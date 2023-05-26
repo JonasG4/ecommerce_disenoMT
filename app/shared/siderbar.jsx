@@ -3,7 +3,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import LogoAdmin from "../../public/prueba4.png";
 import {
   UserGroupIcon,
   BarsIcon,
@@ -14,6 +13,8 @@ import {
   DashboardIcon,
   UsersGearIcon,
   ShapesIcon,
+  TagIcon,
+  CircleInfoIcon,
 } from "./CustomIcons";
 
 export default function Siderbar() {
@@ -22,18 +23,15 @@ export default function Siderbar() {
 
   const menuItems = {
     Dashboard: { name: "Dashboard", path: "/dashboard", icon: DashboardIcon },
-    Clientes: { name: "Clientes", path: "/clientes", icon: UserGroupIcon },
-    Administradores: {
-      name: "Administradores",
-      path: "/administradores",
-      icon: UsersGearIcon,
-    },
+    Usuarios: { name: "Usuarios", path: "/usuarios", icon: UserGroupIcon },
+    Roles: { name: "Roles", path: "/roles", icon: UsersGearIcon },
     Productos: {
       name: "Productos",
       path: "/productos",
       icon: BagsShoppingIcon,
     },
     Categorias: { name: "Categorias", path: "/categorias", icon: ShapesIcon },
+    Marcas: { name: "Marcas", path: "/marcas", icon: TagIcon },
     Pedidos: { name: "Pedidos", path: "/pedidos", icon: CarShoppingIcon },
     Transacciones: {
       name: "Transacciones",
@@ -45,6 +43,7 @@ export default function Siderbar() {
       path: "/configuraciones",
       icon: GearIcon,
     },
+    Ayuda: { name: "Ayuda", path: "/ayuda", icon: CircleInfoIcon },
   };
 
   const showSideBar = () => {
@@ -59,32 +58,46 @@ export default function Siderbar() {
     >
       <div className="h-[70px] border-b-[1px] border-gray-300 p-3 flex justify-around w-full">
         <Image
-          src={LogoAdmin}
-          alt="Logo de DiseñosMT"
+          src={'/images/logotipo.png'}
+          alt="Logo de Eben-Ezer"
           className={`${isOpen ? "" : "hidden"}`}
+          height={50}
           width={140}
+          priority
         />
         <BarsIcon
           className="fill-gray-700 text-gray-700 cursor-pointer hover:scale-105"
           onClick={showSideBar}
           width={16}
         />
-        
       </div>
       <ul className="flex flex-col gap-1 px-4 mt-5">
-        
+        {/* ======================= ANALITICA ================== */}
+        <div className="h-4 mt-3 flex flex-col justify-center">
+          {isOpen ? (
+            <p className="text-sm text-gray-600 font-semibold">
+              Análisis
+            </p>
+          ) : (
+            <div className="h-[1px] w-full bg-gray-300"></div>
+          )}
+        </div>
         {/* ======================= DASHBOARD ================== */}
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
               pathname.includes(menuItems.Dashboard.path)
-                ? "font-bold outline-purple-400"
-                : "font-regular"
-            } flex items-center gap-4 transition-all ease-in duration-200 text-gray-100 bg-purple-600 hover:font-semibold outline outline-[2px] hover:outline-purple-400`}
+                ? "text-blue-600 bg-gray-200 font-bold"
+                : "text-gray-600 font-regular"
+            } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
             href={menuItems.Dashboard.path}
           >
             <menuItems.Dashboard.icon
-              className={`w-4 absolute fill-gray-100`}
+              className={`w-4 absolute ${
+                pathname.includes(menuItems.Dashboard.path)
+                  ? "fill-blue-600 text-blue-600"
+                  : "fill-gray-400 text-gray-400 "
+              }`}
               width={16}
             />
             <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
@@ -101,34 +114,36 @@ export default function Siderbar() {
             )}
           </Link>
         </li>
-        {/* ======================= USUARIOS ================== */}
+        {/* ======================= ADMINISTRACION ================== */}
         <div className="h-4 mt-3 flex flex-col justify-center">
           {isOpen ? (
-            <p className="text-sm text-gray-600 font-semibold">Usuarios</p>
+            <p className="text-sm text-gray-600 font-semibold">
+              Administración
+            </p>
           ) : (
-            <div className="h-[2px] w-full bg-gray-200"></div>
+            <div className="h-[1px] w-full bg-gray-300"></div>
           )}
         </div>
-        {/* ***************** Clientes ******************* */}
+        {/* ***************** USUARIOS ******************* */}
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname.includes(menuItems.Clientes.path)
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Usuarios.path)
+                ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
-            href={menuItems.Clientes.path}
+            href={menuItems.Usuarios.path}
           >
-            <menuItems.Clientes.icon
+            <menuItems.Usuarios.icon
               className={`w-4 absolute ${
-                pathname.includes(menuItems.Clientes.path)
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Usuarios.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
             />
             <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
-              {menuItems.Clientes.name}
+              {menuItems.Usuarios.name}
             </p>
             {!isOpen && (
               <div
@@ -136,32 +151,32 @@ export default function Siderbar() {
                 role="tooltip"
                 className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
               >
-                {menuItems.Clientes.name}
+                {menuItems.Usuarios.name}
               </div>
             )}
           </Link>
         </li>
 
-        {/* ***************** Administradores ******************* */}
+        {/* ***************** ROLES ******************* */}
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname === menuItems.Administradores.path
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Roles.path)
+                ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
-            href={menuItems.Administradores.path}
+            href={menuItems.Roles.path}
           >
-            <menuItems.Administradores.icon
+            <menuItems.Roles.icon
               className={`w-4 absolute ${
-                pathname === menuItems.Administradores.path
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Roles.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
             />
             <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
-              {menuItems.Administradores.name}
+              {menuItems.Roles.name}
             </p>
             {!isOpen && (
               <div
@@ -169,7 +184,7 @@ export default function Siderbar() {
                 role="tooltip"
                 className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
               >
-                {menuItems.Administradores.name}
+                {menuItems.Roles.name}
               </div>
             )}
           </Link>
@@ -187,16 +202,16 @@ export default function Siderbar() {
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname === menuItems.Productos.path
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Productos.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
             href={menuItems.Productos.path}
           >
             <menuItems.Productos.icon
               className={`w-4 absolute ${
-                pathname === menuItems.Productos.path
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Productos.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
@@ -220,16 +235,16 @@ export default function Siderbar() {
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname === menuItems.Categorias.path
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Categorias.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
             href={menuItems.Categorias.path}
           >
             <menuItems.Categorias.icon
               className={`w-4 absolute ${
-                pathname === menuItems.Categorias.path
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Categorias.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
@@ -249,6 +264,39 @@ export default function Siderbar() {
           </Link>
         </li>
 
+        {/* ***************** Marcas ******************* */}
+        <li>
+          <Link
+            className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
+              pathname.includes(menuItems.Marcas.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
+                : "text-gray-600 font-regular"
+            } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
+            href={menuItems.Marcas.path}
+          >
+            <menuItems.Marcas.icon
+              className={`w-4 absolute ${
+                pathname.includes(menuItems.Marcas.path)
+                  ? "fill-blue-600 text-blue-600"
+                  : "fill-gray-400 text-gray-400 "
+              }`}
+              width={16}
+            />
+            <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
+              {menuItems.Marcas.name}
+            </p>
+            {!isOpen && (
+              <div
+                id="tooltip-right"
+                role="tooltip"
+                className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
+              >
+                {menuItems.Marcas.name}
+              </div>
+            )}
+          </Link>
+        </li>
+
         {/* ======================= VENTA ================== */}
         <div className="h-4 mt-3 flex flex-col justify-center">
           {isOpen ? (
@@ -261,16 +309,16 @@ export default function Siderbar() {
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname === menuItems.Pedidos.path
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Pedidos.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
             href={menuItems.Pedidos.path}
           >
             <menuItems.Pedidos.icon
               className={`w-4 absolute ${
-                pathname === menuItems.Pedidos.path
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Pedidos.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
@@ -294,16 +342,16 @@ export default function Siderbar() {
         <li>
           <Link
             className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
-              pathname === menuItems.Transacciones.path
-                ? "text-purple-600 bg-gray-200 font-bold"
+              pathname.includes(menuItems.Transacciones.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
                 : "text-gray-600 font-regular"
             } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
             href={menuItems.Transacciones.path}
           >
             <menuItems.Transacciones.icon
               className={`w-4 absolute ${
-                pathname === menuItems.Transacciones.path
-                  ? "fill-purple-600 text-purple-600"
+                pathname.includes(menuItems.Transacciones.path)
+                  ? "fill-blue-600 text-blue-600"
                   : "fill-gray-400 text-gray-400 "
               }`}
               width={16}
@@ -318,6 +366,80 @@ export default function Siderbar() {
                 className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
               >
                 {menuItems.Transacciones.name}
+              </div>
+            )}
+          </Link>
+        </li>
+
+        {/* ======================= SPORTE ================== */}
+        <div className="h-4 mt-3 flex flex-col justify-center">
+          {isOpen ? (
+            <p className="text-sm text-gray-600 font-semibold">Soporte</p>
+          ) : (
+            <div className="h-[1px] w-full bg-gray-300"></div>
+          )}
+        </div>
+        {/* ***************** Configuraciones ******************* */}
+        <li>
+          <Link
+            className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
+              pathname.includes(menuItems.Configuraciones.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
+                : "text-gray-600 font-regular"
+            } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
+            href={menuItems.Configuraciones.path}
+          >
+            <menuItems.Configuraciones.icon
+              className={`w-4 absolute ${
+                pathname.includes(menuItems.Configuraciones.path)
+                  ? "fill-blue-600 text-blue-600"
+                  : "fill-gray-400 text-gray-400 "
+              }`}
+              width={16}
+            />
+            <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
+              {menuItems.Configuraciones.name}
+            </p>
+            {!isOpen && (
+              <div
+                id="tooltip-right"
+                role="tooltip"
+                className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
+              >
+                {menuItems.Configuraciones.name}
+              </div>
+            )}
+          </Link>
+        </li>
+
+        {/* ***************** Ayuda ******************* */}
+        <li>
+          <Link
+            className={`group relative w-full px-4 h-[34px] rounded-md text-sm ${
+              pathname.includes(menuItems.Ayuda.path)
+              ? "text-blue-600 bg-gray-200 font-bold"
+                : "text-gray-600 font-regular"
+            } flex items-center gap-4 transition-all ease-in-out duration-300  hover:bg-gray-200`}
+            href={menuItems.Ayuda.path}
+          >
+            <menuItems.Ayuda.icon
+              className={`w-4 absolute ${
+                pathname.includes(menuItems.Ayuda.path)
+                  ? "fill-blue-600 text-blue-600"
+                  : "fill-gray-400 text-gray-400 "
+              }`}
+              width={16}
+            />
+            <p className={`absolute left-12 ${isOpen ? "" : "hidden"}`}>
+              {menuItems.Ayuda.name}
+            </p>
+            {!isOpen && (
+              <div
+                id="tooltip-right"
+                role="tooltip"
+                className="inline-block absolute invisible z-10 py-2 px-3 left-[80px] top-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm dark:bg-gray-100 group-hover:visible ring-1 ring-gray-400"
+              >
+                {menuItems.Ayuda.name}
               </div>
             )}
           </Link>

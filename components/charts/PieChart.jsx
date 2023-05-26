@@ -3,11 +3,11 @@ import React, { PureComponent } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Camisa Tshirt", value: 80 },
-  { name: "Vata enfermeria", value: 50 },
-  { name: "Pantalones Kaki", value: 45 },
-  { name: "Sueter", value: 40 },
-  { name: "Blusa", value: 38 },
+  { name: "Cama Woren", value: 80 },
+  { name: "Televisor SONY 4K", value: 50 },
+  { name: "Refrigerador MABE", value: 45 },
+  { name: "Huawei 7IE", value: 40 },
+  { name: "Sofá cama", value: 38 },
 ];
 
 const renderActiveShape = (props) => {
@@ -132,8 +132,8 @@ export default class PieChartData extends PureComponent {
                 cy="50%"
                 innerRadius={60}
                 outerRadius={80}
-                fill="#a855f7"
-                className="fill-purple-700"
+                fill="#4e7cf9"
+                className="fill-blue-700"
                 dataKey="value"
                 onMouseEnter={this.onPieEnter}
               />
@@ -150,8 +150,8 @@ export default class PieChartData extends PureComponent {
                     }}
                     className={`w-full py-1 px-4 flex rounded-md items-center gap-4 shadow-md ${
                       this.state.activeIndex == index
-                        ? "bg-purple-500"
-                        : "bg-purple-100 "
+                        ? "bg-blue-500"
+                        : "bg-blue-100 "
                     }`}
                   >
                     <h1

@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { AngleDown, FilterListIcon } from "../../app/shared/CustomIcons";
+import { CircleCheckIcon, FilterListIcon } from "@/app/shared/CustomIcons";
 
-export default function FilterBy({ changeStateFilter, states }) {
+export default function FilterBy({ data, setData, filters, field }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOpt, setSelectedOpt] = useState("all");
   const ref = useRef();
 
   useEffect(() => {
@@ -12,100 +13,87 @@ export default function FilterBy({ changeStateFilter, states }) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("click", isClickOutside);
     return () => {
       document.removeEventListener("click", isClickOutside);
     };
   }, [isOpen]);
 
+  const handleSelect = (id) => {
+    if (id == "all") {
+      setData(data);
+      setSelectedOpt("all");
+    } else {
+      const newData = data.filter((item) => item[field] == id);
+      setData(newData);
+      setSelectedOpt(id);
+    }
+    setIsOpen(false);
+  };
+
   return (
-    <div className="relative ">
+    <div className="relative flex items-center justify-center">
       <button
-        className="text-gray-600 bg-gray-100 ring-1 ring-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-md text-sm px-4 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className={`group/select text-gray-600 hover:text-blue-500 focus:text-blue-500  hover:ring-blue-500 ${
+          isOpen ? "ring-2 ring-blue-300" : "ring-1 ring-transparent"
+        } focus:outline-none rounded-md text-sm px-2 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <FilterListIcon className={"w-3 mr-2 fill-gray-400 text-gray-500"} />
-        Estado
-        <AngleDown className="ml-2 w-3 h-3 fill-gray-500" />
+        <FilterListIcon
+          className={
+            "w-3 fill-gray-400 text-gray-500 group-hover/select:fill-blue-500 group-hover/select:text-blue-500 group-focus/select:fill-blue-500 group-focus/select:text-blue-500"
+          }
+        />
       </button>
-
       {isOpen && (
-        <div
-          className="absolute right-0 z-10 w-40 ring-1 ring-gray-300 bg-white rounded shadow-lg dark:bg-gray-700 top-11"
+        <ul
+          className="fixed flex flex-col gap-2 z-50 w-40 max-h-[200px] ring-1 ring-blue-300 bg-white rounded-md shadow-md dark:bg-gray-700 translate-y-[86px] p-2 normal-case"
           ref={ref}
         >
-          {/* <div className="p-3">
-            <label htmlFor="input-group-search" className="sr-only">
-              Search
-            </label>
-            <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <svg
-                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-              <input
-                type="text"
-                id="input-group-search"
-                className="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search user"
-              />
-            </div>
-          </div> */}
-          <h4 className="text-sm px-4 py-2 font-semibold text-gray-700">
-            Filtrar por Estado:
-          </h4>
-          <ul className="overflow-y-auto px-5 pb-3 text-sm text-gray-700 dark:text-gray-200">
-            <li>
-              <div className="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <input
-                  defaultChecked={states.activo}
-                  id="checkbox-item-11"
-                  type="checkbox"
-                  name="activo"
-                  onChange={(e) => changeStateFilter(e)}
-                  className="w-4 h-4 text-purple-600 bg-gray-100 rounded border-gray-300 focus:ring-purple-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+          <li
+            id="all"
+            className={`flex w-full justify-between p-2 uppercase hover:bg-blue-100 hover:text-blue-500 cursor-pointer rounded-md group/select
+          ${
+            selectedOpt == "all"
+              ? "font-bold text-blue-500"
+              : "font-normal text-gray-400"
+          }`}
+            onClick={() => handleSelect("all")}
+          >
+            <p className="select-none pointer-events-none">Todos</p>
+            <CircleCheckIcon
+              className={`w-3 ml-2 group-hover/select:fill-blue-500 group-hover/select:text-blue-50 
+            ${
+              selectedOpt == "all"
+                ? "fill-blue-500 text-blue-50"
+                : "fill-gray-300 text-gray-400"
+            }`}
+            />
+          </li>
+          {filters.map((item, index) => {
+            return (
+              <li
+                key={index}
+                className={`float flex w-full justify-between p-2 uppercase hover:bg-blue-100 hover:text-blue-500 cursor-pointer rounded-md group/select ${
+                  selectedOpt == item[field]
+                    ? "font-bold text-blue-500"
+                    : "font-normal text-gray-400"
+                }`}
+                onClick={() => handleSelect(item[field])}
+              >
+                <p className="select-none pointer-events-none">{item.nombre}</p>
+                <CircleCheckIcon
+                  className={`w-3 ml-2 group-hover/select:fill-blue-500 group-hover/select:text-blue-5 ${
+                    selectedOpt == item[field]
+                      ? "fill-blue-500 text-blue-50"
+                      : "fill-gray-300 text-gray-50"
+                  }`}
                 />
-                <label
-                  htmlFor="checkbox-item-11"
-                  className="py-2 ml-2 w-full text-sm text-gray-500 rounded dark:text-gray-300"
-                >
-                  Activo
-                </label>
-              </div>
-            </li>
-            <li>
-              <div className="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <input
-                  defaultChecked={states.inactivo}
-                  id="checkbox-item-12"
-                  type="checkbox"
-                  name="inactivo"
-                  onChange={(e) => changeStateFilter(e)}
-                  className="w-4 h-4 text-purple-600 bg-gray-100 rounded border-gray-300 focus:ring-purple-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                />
-                <label
-                  htmlFor="checkbox-item-12"
-                  className="py-2 ml-2 w-full text-sm text-gray-500 rounded dark:text-gray-300"
-                >
-                  Inactivo
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

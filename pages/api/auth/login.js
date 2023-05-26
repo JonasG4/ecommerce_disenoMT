@@ -1,4 +1,4 @@
-import LoginModel from "../../../models/loginModel";
+import LoginModel from "@/models/loginModel";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { serialize } from "cookie";
